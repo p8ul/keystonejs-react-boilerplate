@@ -19,7 +19,6 @@ coverage
 
 #build
 build
-client
 .cache
 
 # Dependency directory

@@ -1,11 +1,10 @@
 import cors from 'cors';
 import keystone from 'keystone';
-import validate from 'express-validation';
 
 const importRoutes = keystone.importer(__dirname);
 
 export const apiPath = '/api/v1';
-export const todoPath = apiPath + '/todo';
+export const todoPath = `${apiPath}/todo`;
 
 const App = (app) => {
   const routes = {
@@ -20,7 +19,7 @@ const App = (app) => {
 
   app.get('/', (req, res) => {
     res.json({ message: 'API endpoint Keystone cms' });
-  }); 
+  });
 };
 
 export default App;

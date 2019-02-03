@@ -38,7 +38,7 @@ export const create = (req, res) => {
   const data = (req.method === 'POST') ? req.body : req.query;
 
   item.getUpdateHandler(req).process(data, (err) => {
-    if (err) return res.apiError('error', err);
+    if (err) return res.json({ error: err }, 400);
 
     res.json({
       data: item,

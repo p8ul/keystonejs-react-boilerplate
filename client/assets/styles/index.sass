@@ -1,0 +1,63 @@
+@import './navbar';
+@import './appbar';
+@import './common';
+$primary: #1b2f6c
+$accent: #fdbd2c
+
+div [class*="left floated"] 
+  float: left
+  margin-left: 0.25em
+
+div [class*="right floated"]
+  float: right
+   margin-right: 0.25em;
+body
+    background-color: $primary
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-attachment: fixed;
+    background-size: cover;
+    transition: opacity 500ms ease;
+    color: white
+
+.content-container
+    width: 90% !important
+    margin-top: 100px !important
+.logo
+    font-weight: 500;
+    color: #fefefe;
+    width: 74px;
+    font-size: 30px
+
+.ui.form .field>label 
+    color: white
+.ui.dropdown .menu 
+    background: $primary
+
+.ui.selection.active.dropdown 
+    border-color: $accent !important
+    box-shadow: 0 10px 60px rgba(0, 0, 0, .4) !important
+    .menu
+        border-color: $accent !important
+    &.menu
+        border-color: $accent !important
+    
+    &:hover
+        border-color: black
+.ui.selection.dropdown .menu>.item 
+    border-top: 1px solid #857ac1 !important
+
+.ui.form input:not([type]):focus, .ui.form input[type=date]:focus, .ui.form input[type=datetime-local]:focus, .ui.form input[type=email]:focus, .ui.form input[type=file]:focus, .ui.form input[type=number]:focus, .ui.form input[type=password]:focus, .ui.form input[type=search]:focus, .ui.form input[type=tel]:focus, .ui.form input[type=text]:focus, .ui.form input[type=time]:focus, .ui.form input[type=url]:focus
+    border-color: $accent !important
+
+.ui.form textarea:focus
+    border-color: $accent !important
+
+.with-logo
+    margin-right: 40px
+
+.show .content
+        display: block !important
+        height: auto !important
+        opacity: 1 !important
+        padding: 12px !important
