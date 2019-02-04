@@ -6,7 +6,7 @@ const Todo = keystone.list('Todo');
  * List Todos
  */
 export const list = (req, res) => {
-  Todo.model.find((err, items) => {
+  Todo.model.find().sort('-createdAt').exec((err, items) => {
     if (err) return res.apiError('database error', err);
 
     return res.json({

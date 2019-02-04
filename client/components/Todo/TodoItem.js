@@ -6,7 +6,9 @@ const TodoItem = ({ todo }) => (
   <Table.Row>
     <Table.Cell>{todo.title}</Table.Cell>
     <Table.Cell>{todo.description}</Table.Cell>
-    <Table.Cell>...</Table.Cell>
+    <Table.Cell>
+        ....
+    </Table.Cell>
   </Table.Row>
 );
 
