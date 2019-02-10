@@ -15,6 +15,7 @@ const App = (app) => {
   app.get(todoPath, routes.api.todo.index.list);
   app.get(`${todoPath}/:id`, routes.api.todo.index.get);
   app.put(`${todoPath}/:id`, routes.api.todo.index.update);
+  app.delete(`${todoPath}/:id`, routes.api.todo.index.remove);
   app.post(todoPath, routes.api.todo.index.create);
 
   app.get('/', (req, res) => {

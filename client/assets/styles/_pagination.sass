@@ -1,0 +1,93 @@
+.pagination__container
+    display: flex
+    justify-content: center
+    align-content: center
+    
+.pagination
+    margin-bottom: 0
+    align-self: center!important
+    display: flex
+    align-items: center
+    list-style: none
+    border-radius: .1875rem
+    margin-block-start: 1em
+    margin-block-end: 1em
+    margin-inline-start: 0px
+    margin-inline-end: 0px
+    text-align: center!important
+    font-size: .8125rem
+    font-weight: 400
+    line-height: 1.5385
+    color: #fff
+
+    li
+        list-style: none
+        display: list-item
+        text-align: -webkit-match-parent
+        font-family: Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+        font-size: .8125rem
+        font-weight: 400
+        line-height: 1.5385
+        color: #fff
+        border: 1px solid white
+        margin-right: 12px
+        &.disabled
+            border-color: #86989c !important
+            a
+                color: #86989c !important
+                cursor: default
+
+        a
+            margin-left: 0
+            border-top-left-radius: .1875rem
+            border-bottom-left-radius: .1875rem
+            cursor: pointer
+            background-color: transparent
+            border-color: transparent
+            border-radius: .1875rem
+            position: relative
+            overflow: hidden
+            z-index: 0
+            text-align: center
+            min-width: 2.25003rem
+            transition: all ease-in-out .15s
+            display: block
+            padding: .5rem 1rem
+            line-height: 1.5385
+            color: #fff
+            border: 0 solid #ddd
+            text-decoration: none
+            list-style: none
+            font-size: .8125rem
+            font-weight: 400
+            
+
+    li.active
+        background-color: #26a69a
+        border-color: #26a69a
+        cursor: pointer
+        margin-left: 2px
+        position: relative
+        overflow: hidden
+        user-select: none
+        text-align: center
+        width: 0
+        height: 0
+        padding: 0
+        margin: 0
+        transition: all ease-in-out .15s
+        display: block
+        border: 0 solid #ddd
+        a
+            color: white !important
+
+
+.load-home
+    clear: both
+    margin: 24px
+
+.hidden
+    display: none !important
+
+.pagination-pages
+    margin-top: 17px !important

@@ -12,9 +12,26 @@ export const client = axios.create({
   },
 });
 export const apiPath = '/api/v1/';
+
+export const formatParams = (params) => {
+  // extract url parameters from an object
+  let url = '';
+  if (typeof params === 'object') {
+    if (Object.keys(params).length >= 1) {
+      Object.keys(params).forEach((key) => {
+        url += `${key}=${params[key]}&`;
+      });
+      // remove last &
+      url = url.slice(0, -1);
+    }
+  }
+  return url;
+};
+
 export const api = {
   todo: {
     create: data => client.post(`${apiPath}todo`, data),
-    list: () => client.get(`${apiPath}todo`),
+    list: params => client.get(`${apiPath}todo?${formatParams(params)}`),
+    delete: id => client.delete(`${apiPath}todo/${id}`),
   },
 };

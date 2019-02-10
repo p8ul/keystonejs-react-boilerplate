@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Joi from 'joi';
 import Todo from '../../components/Todo';
-import { fetchingTodos, createTodo } from '../../store/actions/todo';
+import { fetchingTodos, createTodo, deleteTodo } from '../../store/actions/todo';
 import { todoValidationSchema } from '../../utils/validations';
 
 export class TodoFormContainer extends Component {
@@ -13,10 +13,12 @@ export class TodoFormContainer extends Component {
     match: PropTypes.shape({}).isRequired,
     addTodo: PropTypes.func.isRequired,
     fetchTodos: PropTypes.func.isRequired,
+    removeTodo: PropTypes.func.isRequired,
   }
 
   state = {
     title: '',
+    searchText: '',
     description: '',
     errors: {},
     id: null,
@@ -26,7 +28,7 @@ export class TodoFormContainer extends Component {
     const {
       match: { params }, fetchTodos,
     } = this.props;
-    fetchTodos();
+    fetchTodos({ page: 1 });
     if (params.id) {
       this.setState({ id: params.id });
     }
@@ -43,6 +45,22 @@ export class TodoFormContainer extends Component {
       [name]: value,
       errors,
     });
+  }
+
+  handleSearchChange = (e) => {
+    const { target } = e;
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+    const { todos: { data }, fetchTodos } = this.props;
+    const { currentPage } = data;
+    fetchTodos({ page: currentPage, search: value });
+  }
+
+  handlePageChange = (pageNumber) => {
+    const { fetchTodos } = this.props;
+    fetchTodos({ page: pageNumber });
   }
 
   handleSubmit = (event) => {
@@ -72,7 +90,7 @@ export class TodoFormContainer extends Component {
   }
 
   render() {
-    const { todos } = this.props;
+    const { todos, removeTodo } = this.props;
     const {
       title, description, errors,
     } = this.state;
@@ -80,6 +98,7 @@ export class TodoFormContainer extends Component {
       <Todo
         handleInputChange={this.handleInputChange}
         handleSubmit={this.handleSubmit}
+        removeTodo={removeTodo}
         title={title}
         description={description}
         errors={errors}
@@ -87,6 +106,8 @@ export class TodoFormContainer extends Component {
         success={todos.success}
         busy={todos.isFetching}
         todos={todos.data}
+        handlePageChange={this.handlePageChange}
+        handleSearchChange={this.handleSearchChange}
       />
     );
   }
@@ -99,6 +120,7 @@ export const mapStateToProps = state => ({
 export const mapDispatchToProps = {
   fetchTodos: fetchingTodos,
   addTodo: createTodo,
+  removeTodo: deleteTodo,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoFormContainer);
