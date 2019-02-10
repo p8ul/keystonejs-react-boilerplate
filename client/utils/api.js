@@ -13,7 +13,7 @@ export const client = axios.create({
 });
 export const apiPath = '/api/v1/';
 
-export const formatParams = (params) => {
+export const formatObjectToParams = (params) => {
   // extract url parameters from an object
   let url = '';
   if (typeof params === 'object') {
@@ -31,7 +31,7 @@ export const formatParams = (params) => {
 export const api = {
   todo: {
     create: data => client.post(`${apiPath}todo`, data),
-    list: params => client.get(`${apiPath}todo?${formatParams(params)}`),
+    list: params => client.get(`${apiPath}todo?${formatObjectToParams(params)}`),
     delete: id => client.delete(`${apiPath}todo/${id}`),
   },
 };

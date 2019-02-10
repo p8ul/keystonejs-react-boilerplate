@@ -13,7 +13,7 @@ Todo.add({
 });
 
 Todo.relationship({ path: 'users', ref: 'User', refPath: 'todos' });
-Todo.defaultColumns = 'title, description';
+Todo.schema.index({ title: 'text' });
 Todo.register();
 
 export default Todo;

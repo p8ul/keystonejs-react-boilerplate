@@ -1,4 +1,3 @@
-@import './common'
 @import './breakpoints'
 
 .custom_menu 
@@ -65,10 +64,6 @@
     color: #FEFEFE
   
 
-  .mobile-logo-focus-trap 
-    @include full-size-overlay
-  
-
 
 .name-and-selected-theater 
   display: flex
@@ -83,17 +78,7 @@
   text-overflow: ellipsis
 
 
-@include screen-size-tablet 
-  header 
-    height: 60px
 
-    &.hidden 
-      top: -60px
-    
-  
-
-  .theater-name 
-    display: none
   
 
   .name-and-selected-theater 

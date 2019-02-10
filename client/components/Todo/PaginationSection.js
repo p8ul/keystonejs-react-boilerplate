@@ -6,7 +6,7 @@ import { Grid } from 'semantic-ui-react';
 const PaginationSection = ({ todos, handlePageChange }) => (
   <Grid columns={3}>
     <Grid.Row>
-      <Grid.Column width={10}></Grid.Column>
+      <Grid.Column width={9}></Grid.Column>
       <Grid.Column className="pagination-pages" width={3}>
           Page
         {' '}

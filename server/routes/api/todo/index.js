@@ -6,17 +6,19 @@ const Todo = keystone.list('Todo');
  * List Todos
  */
 export const list = (req, res) => {
+  const search = new RegExp(req.query.search || '', 'i');
+  const query = {
+    title: search,
+  };
   Todo.paginate({
     page: req.query.page || 1,
     perPage: 5,
     maxPages: 10,
-    // filters: {
-    //   $text: {
-    //     $title: req.query.search || '',
-    //   },
-    // },
+    filters: {
+      $or: [query],
+    },
   }).sort('-createdAt').exec((err, items) => {
-    if (err) return res.apiError('database error', err);
+    if (err) return res.status(500).json(err);
 
     return res.json({
       data: items,
