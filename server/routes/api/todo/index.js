@@ -7,15 +7,16 @@ const Todo = keystone.list('Todo');
  */
 export const list = (req, res) => {
   const search = new RegExp(req.query.search || '', 'i');
-  const query = {
-    title: search,
-  };
+  const query = [
+    { title: search },
+    { description: search },
+  ];
   Todo.paginate({
     page: req.query.page || 1,
     perPage: 5,
     maxPages: 10,
     filters: {
-      $or: [query],
+      $or: query,
     },
   }).sort('-createdAt').exec((err, items) => {
     if (err) return res.status(500).json(err);
