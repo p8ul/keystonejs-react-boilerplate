@@ -1,4 +1,5 @@
-const keystone = require('keystone');
+import keystone from 'keystone';
+import modelHelper from '../../../utils/modelHelper';
 
 const Todo = keystone.list('Todo');
 
@@ -34,7 +35,7 @@ export const get = (req, res) => {
   Todo.model.findById(req.params.id).exec((err, item) => {
     if (err) return res.apiError('database error', err);
     if (!item) return res.apiError('not found');
-    return res.json({
+    return res.status(200).json({
       data: item,
     });
   });
@@ -45,37 +46,30 @@ export const get = (req, res) => {
  * Create a Todo
  */
 export const create = (req, res) => {
-  const item = new Todo.model();
-
-  const data = (req.method === 'POST') ? req.body : req.query;
-
-  item.getUpdateHandler(req).process(data, (err) => {
-    if (err) return res.json({ error: err }, 400);
-
-    res.json({
-      data: item,
+  try {
+    const instance = new Todo.model();
+    const todo = modelHelper.process(instance, req);
+    res.status(204).json({
+      data: todo,
     });
-  });
+  } catch (err) {
+    res.json({ error: err }, 400);
+  }
 };
 
 /**
  * Get Todo by ID
  */
-export const update = (req, res) => {
-  Todo.model.findById(req.params.id).exec((err, item) => {
-    if (err) return res.apiError('database error', err);
-    if (!item) return res.apiError('not found');
-
-    const data = (req.method === 'POST') ? req.body : req.query;
-
-    item.getUpdateHandler(req).process(data, (err) => {
-      if (err) return res.apiError('create error', err);
-
-      return res.json({
-        data: item,
-      });
-    });
-  });
+export const update = async (req, res) => {
+  const { id } = req.params;
+  const instance = await Todo.model.findOne({ _id: id });
+  if (!instance) {
+    return res.status(404).json(
+      'Error updating todo',
+    );
+  }
+  const todo = await modelHelper.process(instance, req);
+  return res.status(200).json({ item: todo });
 };
 
 /**
@@ -86,8 +80,8 @@ export const remove = (req, res) => {
     if (err) return res.apiError('database error', err);
     if (!item) return res.apiError('not found');
 
-    item.remove((err) => {
-      if (err) return res.apiError('database error', err);
+    item.remove((error) => {
+      if (error) return res.apiError('database error', error);
 
       return res.json({
         success: true,

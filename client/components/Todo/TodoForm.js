@@ -5,9 +5,9 @@ import {
 } from 'semantic-ui-react';
 
 const TodoForm = ({
-  title, description, handleInputChange, handleSubmit, errors, busy,
+  title, description, handleInputChange, handleSubmit, errors, loading,
 }) => (
-  <Form loading={busy} className="animated fadeIn">
+  <Form loading={loading} className="animated fadeIn">
     <Form.Field
       id="form-input-control-title"
       control={Input}
@@ -46,7 +46,7 @@ const TodoForm = ({
   </Form>
 );
 TodoForm.propTypes = {
-  busy: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,

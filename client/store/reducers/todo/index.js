@@ -2,6 +2,7 @@ import {
   FETCHING_TODOS,
   FETCH_TODOS,
   DELETE_TODO, DELETE_TODO_FAILURE, DELETE_TODO_SUCCESS,
+  EDIT_TODO, EDIT_TODO_FAILURE, EDIT_TODO_SUCCESS,
 } from '../../../constants';
 
 export const initialState = {
@@ -24,8 +25,14 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, ...payload, isFetching: false };
     case DELETE_TODO_SUCCESS:
       return { ...state, ...payload, isDeleting: false };
+    case EDIT_TODO:
+      return { ...state, isDeleting: true };
+    case EDIT_TODO_SUCCESS:
+      return { ...state, isDeleting: false };
     case DELETE_TODO_FAILURE:
       return { ...state, ...payload, isDeleting: false };
+    case EDIT_TODO_FAILURE:
+      return { ...state, isDeleting: false };
     case DELETE_TODO:
       return { ...state, isDeleting: true };
     default:

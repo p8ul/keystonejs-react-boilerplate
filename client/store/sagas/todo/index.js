@@ -6,6 +6,7 @@ import {
   FETCHING_TODOS,
   CREATE_TODO,
   DELETE_TODO,
+  EDIT_TODO,
 } from '../../../constants';
 import {
   fetchTodos,
@@ -14,10 +15,21 @@ import {
   createTodoFailure,
   deleteTodoFailure,
   deleteTodoSuccess,
+  editTodoFailure,
+  editTodoSuccess,
 } from '../../actions/todo';
 
 export const responseData = response => (response ? response.data : {});
-
+/** Todo editing */
+export function* editTodoAsync({ payload }) {
+  try {
+    yield call(api.todo.edit, payload);
+    yield put(editTodoSuccess({}));
+    yield put(fetchingTodos());
+  } catch (error) {
+    yield put(editTodoFailure({}));
+  }
+}
 /** Todo delete */
 export function* deleteTodoAsync({ payload }) {
   try {
@@ -62,4 +74,8 @@ export function* watchCreateTodo() {
 
 export function* watchDeleteTodo() {
   yield takeEvery(DELETE_TODO, deleteTodoAsync);
+}
+
+export function* watchEditTodo() {
+  yield takeEvery(EDIT_TODO, editTodoAsync);
 }

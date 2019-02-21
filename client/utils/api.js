@@ -4,7 +4,7 @@ export const authUserHeader = () => ({
   Authorization: 'Bearer {token}',
 });
 
-export const client = axios.create({
+export const server = axios.create({
   baseURL: process.env.SERVER_APP_API_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -13,6 +13,10 @@ export const client = axios.create({
 });
 export const apiPath = '/api/v1/';
 
+/**
+ *
+ * @param {Object} params
+ */
 export const formatObjectToParams = (params) => {
   // extract url parameters from an object
   let url = '';
@@ -30,8 +34,9 @@ export const formatObjectToParams = (params) => {
 
 export const api = {
   todo: {
-    create: data => client.post(`${apiPath}todo`, data),
-    list: params => client.get(`${apiPath}todo?${formatObjectToParams(params)}`),
-    delete: id => client.delete(`${apiPath}todo/${id}`),
+    create: data => server.post(`${apiPath}todo`, data),
+    list: params => server.get(`${apiPath}todo?${formatObjectToParams(params)}`),
+    delete: id => server.delete(`${apiPath}todo/${id}`),
+    edit: data => server.put(`${apiPath}todo/${data._id}`, data),
   },
 };

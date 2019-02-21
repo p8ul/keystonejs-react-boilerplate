@@ -3,7 +3,14 @@ import PropTypes from 'prop-types';
 import { Input } from 'semantic-ui-react';
 
 const SearchInput = ({ searchText, handleSearchChange }) => (
-  <Input onChange={handleSearchChange} icon="search" value={searchText} placeholder="Search..." fluid />
+  <Input
+    onChange={handleSearchChange}
+    icon="search"
+    value={searchText}
+    placeholder="Search..."
+    fluid
+    name="searchText"
+  />
 );
 SearchInput.propTypes = {
   searchText: PropTypes.string.isRequired,

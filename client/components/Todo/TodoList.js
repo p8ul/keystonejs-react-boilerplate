@@ -6,10 +6,20 @@ import PaginationSection from './PaginationSection';
 import SearchInput from './SearchInput';
 
 const TodoList = ({
-  todos, removeTodo, handlePageChange, handleSearchChange, loading,
+  todos,
+  removeTodo,
+  handlePageChange,
+  handleSearchChange,
+  loading,
+  setTodoDetails,
+  searchText,
 }) => (
   <React.Fragment>
-    <SearchInput loading={loading} handleSearchChange={handleSearchChange} />
+    <SearchInput
+      loading={loading}
+      searchText={searchText}
+      handleSearchChange={handleSearchChange}
+    />
     <Table striped className="animated fadeInRight">
       <Table.Header>
         <Table.Row>
@@ -21,7 +31,12 @@ const TodoList = ({
 
       <Table.Body>
         {todos.results.map(todo => (
-          <TodoItem key={todo._id} todo={todo} removeTodo={removeTodo} />
+          <TodoItem
+            key={todo._id}
+            todo={todo}
+            setTodoDetails={setTodoDetails}
+            removeTodo={removeTodo}
+          />
         ))}
       </Table.Body>
     </Table>
@@ -33,6 +48,10 @@ TodoList.propTypes = {
   todos: PropTypes.shape({}).isRequired,
   removeTodo: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  handleSearchChange: PropTypes.func.isRequired,
+  setTodoDetails: PropTypes.func.isRequired,
+  searchText: PropTypes.string.isRequired,
 };
 
 export default TodoList;

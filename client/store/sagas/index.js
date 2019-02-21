@@ -1,6 +1,6 @@
 import { all, fork } from 'redux-saga/effects';
 import {
-  watchFetchingTodos, watchCreateTodo, watchDeleteTodo,
+  watchFetchingTodos, watchCreateTodo, watchDeleteTodo, watchEditTodo,
 } from './todo';
 
 
@@ -9,5 +9,6 @@ export default function* root() {
     fork(watchFetchingTodos),
     fork(watchCreateTodo),
     fork(watchDeleteTodo),
+    fork(watchEditTodo),
   ]);
 }

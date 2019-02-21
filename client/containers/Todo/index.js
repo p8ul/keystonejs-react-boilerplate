@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Joi from 'joi';
 import Todo from '../../components/Todo';
-import { fetchingTodos, createTodo, deleteTodo } from '../../store/actions/todo';
+import {
+  fetchingTodos, createTodo, deleteTodo, editTodo,
+} from '../../store/actions/todo';
 import { todoValidationSchema } from '../../utils/validations';
 
 export class TodoFormContainer extends Component {
@@ -14,24 +16,31 @@ export class TodoFormContainer extends Component {
     addTodo: PropTypes.func.isRequired,
     fetchTodos: PropTypes.func.isRequired,
     removeTodo: PropTypes.func.isRequired,
+    updateTodo: PropTypes.func.isRequired,
   }
 
   state = {
     title: '',
-    searchText: '',
     description: '',
     errors: {},
-    id: null,
+    searchText: '',
+    _id: '',
+    edit: false,
   }
 
   componentDidMount() {
-    const {
-      match: { params }, fetchTodos,
-    } = this.props;
+    const { fetchTodos } = this.props;
     fetchTodos({ page: 1 });
-    if (params.id) {
-      this.setState({ id: params.id });
-    }
+  }
+
+  setTodoDetails = (todo) => {
+    const { title, description, _id } = todo;
+    this.setState({
+      title,
+      description,
+      _id,
+      edit: true,
+    });
   }
 
   handleInputChange = (e) => {
@@ -65,9 +74,9 @@ export class TodoFormContainer extends Component {
 
   handleSubmit = (event) => {
     const {
-      id, title, description,
+      title, description, edit, _id,
     } = this.state;
-    const { addTodo } = this.props;
+    const { addTodo, updateTodo } = this.props;
     event.preventDefault();
     Joi.validate({ title, description }, todoValidationSchema, (err) => {
       if (err) {
@@ -80,19 +89,21 @@ export class TodoFormContainer extends Component {
       }
 
       let data = { title, description };
-      if (id) {
-        data = { ...data, id };
-        return true;
+      if (edit) {
+        data = { ...data, _id };
+        updateTodo(data);
+      } else {
+        addTodo(data);
       }
-      addTodo(data);
-      this.setState({ title: '', description: '' });
+
+      this.setState({ title: '', description: '', edit: false });
     });
   }
 
   render() {
     const { todos, removeTodo } = this.props;
     const {
-      title, description, errors,
+      title, description, errors, searchText,
     } = this.state;
     return (
       <Todo
@@ -104,10 +115,12 @@ export class TodoFormContainer extends Component {
         errors={errors}
         serverError={todos.errors}
         success={todos.success}
-        busy={todos.isFetching}
+        loading={todos.isFetching}
         todos={todos.data}
         handlePageChange={this.handlePageChange}
         handleSearchChange={this.handleSearchChange}
+        setTodoDetails={this.setTodoDetails}
+        searchText={searchText}
       />
     );
   }
@@ -120,6 +133,7 @@ export const mapStateToProps = state => ({
 export const mapDispatchToProps = {
   fetchTodos: fetchingTodos,
   addTodo: createTodo,
+  updateTodo: editTodo,
   removeTodo: deleteTodo,
 };
 
