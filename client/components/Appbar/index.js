@@ -2,8 +2,7 @@ import React from 'react';
 import { Image, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import MenuItem from './MenuItem';
-
-const logo = require('../../assets/images/logo.png');
+import logo from '../../assets/images/logo.png';
 
 const AppBar = ({ activeMenuItem, menuItems, goTo }) => (
   <React.Fragment>

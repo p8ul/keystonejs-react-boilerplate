@@ -23,6 +23,8 @@ build
 
 # Dependency directory
 node_modules
+.expo
+
 
 # Optional npm cache directory
 .npm

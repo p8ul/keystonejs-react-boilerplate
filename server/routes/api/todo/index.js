@@ -45,11 +45,11 @@ export const get = (req, res) => {
 /**
  * Create a Todo
  */
-export const create = (req, res) => {
+export const create = async (req, res) => {
   try {
     const instance = new Todo.model();
-    const todo = modelHelper.process(instance, req);
-    res.status(204).json({
+    const todo = await modelHelper.process(instance, req);
+    res.status(201).json({
       data: todo,
     });
   } catch (err) {
