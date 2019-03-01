@@ -12,7 +12,6 @@ keystone.init({
   static: './public',
   'auto update': true,
   updates: './updates',
-  'auto update': true,
   session: true,
   auth: true,
   mongo: process.env.MONGODB_URL,

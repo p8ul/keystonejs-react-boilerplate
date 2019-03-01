@@ -1,10 +1,14 @@
 import cors from 'cors';
 import keystone from 'keystone';
+import validate from 'express-validation';
+import validators from '../validators';
+import apiResponse from '../middleware/apiResponse';
+import errorHandler from '../middleware/errorHandler';
 
 const importRoutes = keystone.importer(__dirname);
-
 export const apiPath = '/api/v1';
 export const todoPath = `${apiPath}/todo`;
+export const authPath = `${apiPath}/auth`;
 
 const App = (app) => {
   const routes = {
@@ -12,6 +16,16 @@ const App = (app) => {
   };
 
   app.use(cors());
+  app.use(apiResponse);
+
+  // auth routes
+  app.post(
+    `${authPath}/login`,
+    validate(validators.login),
+    routes.api.auth.index.login,
+  );
+
+  // todo routes
   app.get(todoPath, routes.api.todo.index.list);
   app.get(`${todoPath}/:id`, routes.api.todo.index.get);
   app.put(`${todoPath}/:id`, routes.api.todo.index.update);
@@ -21,6 +35,8 @@ const App = (app) => {
   app.get('/', (req, res) => {
     res.json({ message: 'API endpoint Keystone cms' });
   });
+
+  app.use(errorHandler);
 };
 
 export default App;
