@@ -8,8 +8,8 @@ export const fields = {
 
 export const exclude = {
   password: 0,
-  _id: 0,
   __v: 0,
+  services: 0,
 };
 
 export const passwordError = {

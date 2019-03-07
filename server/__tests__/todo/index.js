@@ -46,7 +46,7 @@ describe('Todo', () => {
     });
   });
 
-  describe('Delet todo', () => {
+  describe('Delete todo', () => {
     it('should delete todo successfully when data is valid', async () => {
       const todo = await createTodo();
       res = await apiDeleteTodo(todo._id);

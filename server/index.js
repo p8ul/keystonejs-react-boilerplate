@@ -3,7 +3,11 @@ import dotEnv from 'dotenv';
 import keystone from 'keystone';
 import routes from './routes';
 
+
 dotEnv.config();
+const MONGODB_URL = process.env.NODE_ENV === 'development'
+  ? process.env.MONGODB_URL
+  : process.env.MONGODB_URL_TEST;
 
 keystone.init({
   name: 'Keystonejs CMS',
@@ -14,9 +18,11 @@ keystone.init({
   updates: './updates',
   session: true,
   auth: true,
-  mongo: process.env.MONGODB_URL,
+  mongo: MONGODB_URL,
   'user model': 'User',
   'cookie secret': process.env.COOKIE_SECRET,
+  'cloudinary secure': true,
+  'cloudinary config': process.env.CLOUDINARY_URL,
 });
 
 keystone.import('./models');

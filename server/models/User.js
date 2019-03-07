@@ -3,8 +3,7 @@ import async from 'async';
 import keystone from 'keystone';
 import Email from 'keystone-email';
 
-// const { keystone: { Field: Types } } = keystone;
-const Types = keystone.Field.Types;
+const { Types } = keystone.Field;
 
 /**
  * Users Model
@@ -26,15 +25,19 @@ const deps = {
 };
 
 User.add({
-  name: { type: Types.Name, required: true, index: true },
-  email: { type: Types.Email, initial: true, index: true },
+  name: {
+    type: Types.Name, unique: true, required: true, index: true,
+  },
+  email: {
+    type: Types.Email, unique: true, initial: true, index: true,
+  },
   password: { type: Types.Password, initial: true },
   resetPasswordKey: { type: String, hidden: true },
 }, 'Profile', {
   isPublic: { type: Boolean, default: true },
   isOrganiser: Boolean,
   isGroup: Boolean,
-  // photo: { type: Types.CloudinaryImage },
+  photo: { type: Types.CloudinaryImage },
   github: { type: String, width: 'short' },
   twitter: { type: String, width: 'short' },
   website: { type: Types.Url },
@@ -196,3 +199,5 @@ User.schema.methods.resetPassword = (callback) => {
 
 User.defaultColumns = 'name, email, twitter, isAdmin';
 User.register();
+
+export default User;

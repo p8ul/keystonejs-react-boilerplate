@@ -1,8 +1,18 @@
 
 import supertest from 'supertest';
+import faker from 'faker';
 import keystone from '.';
 import Todo from '../../models/Todo';
+import User from '../../models/User';
 import { generateToken } from './jwt';
+
+faker.seed(5711);
+
+export { faker };
+
+export const removeAllCollections = async (model) => {
+  await model.model.remove({});
+};
 
 export const createTodo = async (times = 1) => {
   const todos = [];
@@ -11,6 +21,19 @@ export const createTodo = async (times = 1) => {
     todos.push(await Todo.model.create({ title: `title${i}`, description: `descript${i}` }));
   }
   return times === 1 ? todos[0] : todos;
+};
+
+export const createUser = async (times = 1) => {
+  const users = [];
+  for (let i = 0; i < times; i = +1) {
+    // eslint-disable-next-line no-await-in-loop
+    users.push(await User.model.create({
+      name: `${faker.random.uuid()}-${faker.internet.userName()}`,
+      email: `${faker.random.uuid()}-${faker.internet.userName()}@example.com`,
+      password: faker.internet.password(),
+    }));
+  }
+  return times === 1 ? users[0] : users;
 };
 
 export default class app {

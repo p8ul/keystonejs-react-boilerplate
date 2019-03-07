@@ -1,0 +1,1 @@
+Object.defineProperty(exports,"__esModule",{value:true});exports.create=void 0;var create={User:[{username:'user',email:'user@name.com',password:'user',confirmed:false,isAdmin:true}]};exports.create=create;
